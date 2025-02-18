@@ -1,69 +1,133 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering; 
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
-    public static GameManager Instance { get { return instance; } }
+   private static GameManager instance;
+   public static GameManager Instance { get { return instance; } }
 
-    public GameObject playerPrefab;  // 현재 사용중인 캐릭터 프리팹
-    private float currentScore = 0f;
-    private float bestScore = 0f;
-    public bool isGameOver = false;
+   private GameObject currentPlayerPrefab; 
+   private float currentScore = 0f;
+   private float bestScore = 0f;
+   public bool isGameOver = false;
 
-    void Awake()
+   void Awake()
+   {
+       if (instance == null)
+       {
+           instance = this;
+           DontDestroyOnLoad(gameObject);
+           LoadPlayerPrefab();
+           SceneManager.sceneLoaded += OnSceneLoaded;
+       }
+       else
+       {
+           Destroy(gameObject);
+       }
+   }
+
+   void LoadPlayerPrefab()
     {
-        if (instance == null)
+        currentPlayerPrefab = Resources.Load<GameObject>("SPUM/SPUM_Units/Player0");
+        if(currentPlayerPrefab == null)
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-        else
-        {
-            Destroy(gameObject);
+            Debug.LogError("Player prefab not found in SPUM/SPUM_Units/Player0");
         }
     }
 
-    // 씬 로드될 때마다 호출
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+   void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MiniGame")  // 미니게임 씬 이름
+        if (scene.name == "MainScene" || scene.name == "MiniGame1")  
         {
             SpawnPlayer();
         }
     }
 
-    void SpawnPlayer()
+   void SpawnPlayer()
     {
-        // 플레이어 스폰 위치에 캐릭터 생성
-        Vector3 spawnPosition = new Vector3(0, 0, 0);  // 적절한 스폰 위치 설정
-        Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
-    }
-
-    public void GameOver()
-    {
-        isGameOver = true;
-        if (currentScore > bestScore)
+        Debug.Log("Spawning Player...");
+        if(currentPlayerPrefab != null)
         {
-            bestScore = currentScore;
+            Debug.Log("Player Prefab found!");
+            Vector3 spawnPosition = new Vector3(0, 0, 0);
+            GameObject player = Instantiate(currentPlayerPrefab, spawnPosition, Quaternion.identity);
+            
+            player.transform.localScale = new Vector3(2f, 2f, 2f);
+
+            Transform unitRoot = player.transform.GetChild(0);  // UnitRoot는 첫 번째 자식
+            if(unitRoot != null)
+            {
+                GameObject unitObj = unitRoot.gameObject;
+                
+                // 태그와 레이어 설정
+                unitObj.tag = "Player";
+                unitObj.layer = LayerMask.NameToLayer("Layer 1");
+
+                // SortingGroup이 없을 때만 추가
+                SortingGroup sortingGroup = unitObj.GetComponent<SortingGroup>();
+                if(sortingGroup == null)
+                {
+                    sortingGroup = unitObj.AddComponent<SortingGroup>();
+                }
+                sortingGroup.sortingLayerName = "Layer 1";
+                sortingGroup.sortingOrder = 2;
+
+                // Rigidbody2D가 없을 때만 추가
+                Rigidbody2D rb = unitObj.GetComponent<Rigidbody2D>();
+                if(rb == null)
+                {
+                    rb = unitObj.AddComponent<Rigidbody2D>();
+                }
+                rb.gravityScale = 0f;
+                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+                // BoxCollider2D가 없을 때만 추가
+                if(unitObj.GetComponent<BoxCollider2D>() == null)
+                {
+                    unitObj.AddComponent<BoxCollider2D>();
+                }
+
+                // PlayerController가 없을 때만 추가
+                if(unitObj.GetComponent<PlayerController>() == null)
+                {
+                    unitObj.AddComponent<PlayerController>();
+                }
+            }
+            else
+            {
+                Debug.LogError("UnitRoot not found in prefab!");
+            }
+        }
+        else
+        {
+            Debug.Log("Player Prefab is null!");
         }
     }
 
-    public void RestartGame()
-    {
-        isGameOver = false;
-        currentScore = 0;
-        SceneManager.LoadScene("MiniGame");
-    }
+   public void GameOver()
+   {
+       isGameOver = true;
+       if (currentScore > bestScore)
+       {
+           bestScore = currentScore;
+       }
+   }
 
-    public void ReturnToMain()
-    {
-        SceneManager.LoadScene("Main");  // 메인 씬 이름
-    }
+   public void RestartGame()
+   {
+       isGameOver = false;
+       currentScore = 0;
+       SceneManager.LoadScene("MiniGame1");
+   }
 
-    void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
+   public void ReturnToMain()
+   {
+       SceneManager.LoadScene("MainScene");
+   }
+
+   void OnDestroy()
+   {
+       SceneManager.sceneLoaded -= OnSceneLoaded;
+   }
 }
