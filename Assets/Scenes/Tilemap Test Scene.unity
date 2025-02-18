@@ -3273,6 +3273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneName: MainScene
   isReady: 0
+  highlightColor: {r: 0.8, g: 0.8, b: 1, a: 1}
 --- !u!1001 &450652777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7819,8 +7820,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526efd1f1b34a7a4c84fbfd6564e8303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: MainScene
+  sceneName: MiniGame1
   isReady: 1
+  highlightColor: {r: 0.8, g: 0.8, b: 1, a: 1}
 --- !u!1001 &1413849429
 PrefabInstance:
   m_ObjectHideFlags: 0
