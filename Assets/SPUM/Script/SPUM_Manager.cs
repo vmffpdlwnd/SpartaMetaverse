@@ -1027,7 +1027,7 @@ public class SPUM_Manager : MonoBehaviour
 
     public string GetFileName()
     {
-        string tName ="Unit";
+        string tName ="Player";
         int tNameNum = 0;
         List<string> _prefabNameList = new List<string>();
         for(var i = 0 ; i < _prefabUnitList.Count;i++)
