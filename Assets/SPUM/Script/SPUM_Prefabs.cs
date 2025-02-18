@@ -26,35 +26,31 @@ public class SPUM_Prefabs : MonoBehaviour
             _anim.SetBool("EditChk",EditChk);
             break;
 
-            case 3: //Stun
-            _anim.SetFloat("RunState",1.0f);
-            break;
-
-            case 4: //Attack Sword
+            case 3: //Attack Sword
             _anim.SetTrigger("Attack");
             _anim.SetFloat("AttackState",0.0f);
             _anim.SetFloat("NormalState",0.0f);
             break;
 
-            case 5: //Attack Bow
+            case 4: //Attack Bow
             _anim.SetTrigger("Attack");
             _anim.SetFloat("AttackState",0.0f);
             _anim.SetFloat("NormalState",0.5f);
             break;
 
-            case 6: //Attack Magic
+            case 5: //Attack Magic
             _anim.SetTrigger("Attack");
             _anim.SetFloat("AttackState",0.0f);
             _anim.SetFloat("NormalState",1.0f);
             break;
 
-            case 7: //Skill Sword
+            case 6: //Skill Sword
             _anim.SetTrigger("Attack");
             _anim.SetFloat("AttackState",1.0f);
             _anim.SetFloat("NormalState",0.0f);
             break;
 
-            case 8: //Skill Bow
+            case 7: //Skill Bow
             _anim.SetTrigger("Attack");
             _anim.SetFloat("AttackState",1.0f);
             _anim.SetFloat("NormalState",0.5f);
