@@ -22,8 +22,7 @@ public class SPUM_Prefabs : MonoBehaviour
             break;
 
             case 2: //Death
-            _anim.SetTrigger("Die");
-            _anim.SetBool("EditChk",EditChk);
+            _anim.SetFloat("RunState",0f);
             break;
 
             case 3: //Attack Sword
