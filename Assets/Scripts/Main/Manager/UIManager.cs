@@ -44,11 +44,10 @@ namespace Main
             }
         }
 
-        public void ShowNPCDialog(string[] dialogText)
+        public void ShowNPCDialog()
         {
             if (talkUI != null && talkUIComponent != null)
             {
-                talkUIComponent.SetDialogText(dialogText);
                 talkUI.SetActive(true);
             }
         }
@@ -58,6 +57,13 @@ namespace Main
             if (talkUI != null)
             {
                 talkUI.SetActive(false);
+            }
+        }
+        public void ProgressDialog()
+        {
+            if (talkUIComponent != null)
+            {
+                talkUIComponent.ShowNextDialogLine();
             }
         }
 

@@ -59,6 +59,10 @@ public class GameManager : MonoBehaviour
             GameObject player = Instantiate(currentPlayerPrefab, spawnPosition, Quaternion.identity);
             player.transform.localScale = new Vector3(2f, 2f, 2f);
 
+            // 태그와 레이어 설정
+            player.tag = "Player";
+            player.layer = LayerMask.NameToLayer("Layer 1");
+
             Transform unitRoot = player.transform.GetChild(0);
             if(unitRoot != null)
             {
@@ -76,7 +80,7 @@ public class GameManager : MonoBehaviour
                     sortingGroup = unitObj.AddComponent<SortingGroup>();
                 }
                 sortingGroup.sortingLayerName = "Layer 1";
-                sortingGroup.sortingOrder = 2;
+                sortingGroup.sortingOrder = 3;
 
                 // Rigidbody2D 설정
                 Rigidbody2D rb = unitObj.GetComponent<Rigidbody2D>();

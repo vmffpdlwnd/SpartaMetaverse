@@ -11,6 +11,8 @@ public class InteractionObject : MonoBehaviour
     public Color highlightColor = new Color(0.8f, 0.8f, 1f, 1f); // 밝은 하늘색
 
     private Main.UIManager uiManager;
+    
+    public bool isNPCDialog = false;
 
     private void Start()
     {
@@ -26,9 +28,20 @@ public class InteractionObject : MonoBehaviour
             canInteract = true;
             spriteRenderer.color = highlightColor;
             
-            // 게임 이름만 UIManager에 전달
-            if (uiManager != null)
-                uiManager.ShowMiniGame(gameName, isReady);
+            if (isNPCDialog)
+            {
+                // NPC 대화 UI 표시 요청
+                if (uiManager != null)
+                {
+                    uiManager.ShowNPCDialog();
+                }
+            }
+            else
+            {
+                // 미니게임 UI 표시
+                if (uiManager != null)
+                    uiManager.ShowMiniGame(gameName, isReady);
+            }
         }
     }
 
@@ -39,16 +52,38 @@ public class InteractionObject : MonoBehaviour
             canInteract = false;
             spriteRenderer.color = originalColor;
 
-            if (uiManager != null)
-                uiManager.HideMiniGame();
+            if (isNPCDialog)
+            {
+                // NPC 대화 UI 숨김 요청
+                if (uiManager != null) 
+                    uiManager.HideNPCDialog();
+            }
+            else
+            {
+                // 미니게임 UI 숨김
+                if (uiManager != null)
+                    uiManager.HideMiniGame();
+            }
         }
     }
 
     private void Update()
     {
-        if (canInteract && isReady && Input.GetKeyDown(KeyCode.F))
+        if (canInteract && Input.GetKeyDown(KeyCode.F))
         {
-            SceneManager.LoadScene(gameName);
+            if (isNPCDialog)
+            {
+                // 대화 진행 요청
+                if (uiManager != null)
+                {
+                    uiManager.ProgressDialog();
+                }
+            }
+            else if (isReady)
+            {
+                // 미니게임 씬 로드
+                SceneManager.LoadScene(gameName);
+            }
         }
     }
 }
