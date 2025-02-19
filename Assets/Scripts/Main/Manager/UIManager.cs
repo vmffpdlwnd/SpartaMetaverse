@@ -7,23 +7,22 @@ namespace Main
         public GameObject miniGameUI; // 미니게임 팝업 UI
         private MiniGameUI miniGameUIComponent;
 
-<<<<<<< Updated upstream
-=======
         public GameObject talkUI; // NPC 대화 UI  
         private TalkUI talkUIComponent;
-
->>>>>>> Stashed changes
 
         void Start()
         {
             miniGameUI.SetActive(false);
-            miniGameUIComponent = miniGameUI.GetComponent<MiniGameUI>();
-<<<<<<< Updated upstream
-=======
+            if (miniGameUI != null)
+            {
+                miniGameUIComponent = miniGameUI.GetComponent<MiniGameUI>();
+            }
 
             talkUI.SetActive(false);
-            talkUIComponent = talkUI.GetComponent<TalkUI>();
->>>>>>> Stashed changes
+            if (talkUI != null) 
+            {
+                talkUIComponent = talkUI.GetComponent<TalkUI>();
+            }
         }
 
         public void ShowMiniGame(string gameName, bool isReady)
@@ -44,8 +43,6 @@ namespace Main
                 miniGameUI.SetActive(false);
             }
         }
-<<<<<<< Updated upstream
-=======
 
         public void ShowNPCDialog(string[] dialogText)
         {
@@ -63,6 +60,6 @@ namespace Main
                 talkUI.SetActive(false);
             }
         }
->>>>>>> Stashed changes
+
     }
 }

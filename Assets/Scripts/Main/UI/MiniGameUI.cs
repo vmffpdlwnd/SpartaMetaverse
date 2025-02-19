@@ -38,7 +38,6 @@ public class MiniGameUI : MonoBehaviour
     {
         if (!isReady)
         {
-            Debug.Log("isReady = false");
             gameNameText.text = "게임 준비 중입니다.";
             gameRuleText.text = " ";
             gameControlText.text = " ";
