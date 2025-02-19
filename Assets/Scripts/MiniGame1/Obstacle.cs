@@ -1,4 +1,3 @@
-using MiniGame1;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

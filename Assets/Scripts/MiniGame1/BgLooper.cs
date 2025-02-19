@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class BgLooper : MonoBehaviour
 {
@@ -22,9 +20,7 @@ public class BgLooper : MonoBehaviour
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("Triggered: " + collision.name);
-        
+    {        
         if (collision.CompareTag("BackGround"))
         {
             float widthOfBgObject = ((BoxCollider2D)collision).size.x;

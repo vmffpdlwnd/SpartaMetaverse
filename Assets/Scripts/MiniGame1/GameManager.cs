@@ -66,7 +66,6 @@ namespace MiniGame1
         {
             currentScore += score;
             uiManager.UpdateScore(currentScore);
-            Debug.Log("Score: " + currentScore);
         }
     }
 }
