@@ -28,6 +28,7 @@ namespace MiniGame1
         }
         
         private int currentScore = 0;
+        private int bestScore = 0;
         MiniGame1.UIManager uiManager;
         public MiniGame1.UIManager UIManager
         {
@@ -46,6 +47,7 @@ namespace MiniGame1
             instance = this;
             uiManager = FindObjectOfType<UIManager>();
             DontDestroyOnLoad(gameObject);
+            bestScore = PlayerPrefs.GetInt("MiniGame1BestScore", 0);
         }
         void Start()
         {
@@ -53,7 +55,13 @@ namespace MiniGame1
         }
         public void GameOver()
         {
-            Debug.Log("Game Over");
+            if (currentScore > bestScore)
+            {
+                bestScore = currentScore;
+                PlayerPrefs.SetInt("MiniGame1BestScore", bestScore);
+                PlayerPrefs.Save(); // 변경사항 즉시 저장
+            }
+
             uiManager.SetRestart();
         }
         
