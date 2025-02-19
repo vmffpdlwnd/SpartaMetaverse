@@ -10,6 +10,9 @@ namespace Main
         public GameObject talkUI; // NPC 대화 UI  
         private TalkUI talkUIComponent;
 
+        public GameObject customizationUI;
+        private CustomizationUI customizationUIComponent;
+
         void Start()
         {
             miniGameUI.SetActive(false);
@@ -22,6 +25,10 @@ namespace Main
             if (talkUI != null) 
             {
                 talkUIComponent = talkUI.GetComponent<TalkUI>();
+            }
+             if (customizationUI != null)
+            {
+                customizationUIComponent = customizationUI.GetComponent<CustomizationUI>();
             }
         }
 

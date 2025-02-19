@@ -29,15 +29,23 @@ public class GameManager : MonoBehaviour
         float miniGame1BestScore = PlayerPrefs.GetFloat("MiniGame1BestScore",0);
     }
 
-    void LoadPlayerPrefab()
+    public void LoadPlayerPrefab()
     {
-        currentPlayerPrefab = Resources.Load<GameObject>("SPUM/SPUM_Units/Player0");
-        if(currentPlayerPrefab == null)
+        // 폴더의 모든 캐릭터 파일 검색
+        Object[] characterFiles = Resources.LoadAll("SPUM/SPUM_Units", typeof(GameObject));
+        
+        // 캐릭터가 있으면 첫번째 캐릭터 로드
+        if(characterFiles != null && characterFiles.Length > 0)
         {
-            Debug.LogError("Player prefab not found in SPUM/SPUM_Units/Player0");
+            currentPlayerPrefab = characterFiles[0] as GameObject;
+            Debug.Log("Player prefab loaded: " + currentPlayerPrefab.name);
+        }
+        else
+        {
+            currentPlayerPrefab = null;
+            Debug.Log("No player prefabs found."); // Error 대신 Log로 변경
         }
     }
-
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "MainScene")  
@@ -59,10 +67,6 @@ public class GameManager : MonoBehaviour
             GameObject player = Instantiate(currentPlayerPrefab, spawnPosition, Quaternion.identity);
             player.transform.localScale = new Vector3(2f, 2f, 2f);
 
-            // 태그와 레이어 설정
-            player.tag = "Player";
-            player.layer = LayerMask.NameToLayer("Layer 1");
-
             Transform unitRoot = player.transform.GetChild(0);
             if(unitRoot != null)
             {
@@ -80,7 +84,7 @@ public class GameManager : MonoBehaviour
                     sortingGroup = unitObj.AddComponent<SortingGroup>();
                 }
                 sortingGroup.sortingLayerName = "Layer 1";
-                sortingGroup.sortingOrder = 3;
+                sortingGroup.sortingOrder = 2;
 
                 // Rigidbody2D 설정
                 Rigidbody2D rb = unitObj.GetComponent<Rigidbody2D>();
