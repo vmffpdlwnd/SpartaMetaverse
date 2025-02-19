@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour 
 {
-    private SPUM_Prefabs spumPrefab;
+    public SPUM_Prefabs spumPrefab;
     private Rigidbody2D rb;
     private Animator animator;
     public float moveSpeed = 2.5f;
@@ -14,9 +14,11 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        spumPrefab = GetComponent<SPUM_Prefabs>();
         rb = GetComponent<Rigidbody2D>();
-        animator = spumPrefab._anim;
+        if(spumPrefab != null)
+        {
+            animator = spumPrefab._anim;
+        }
         baseScaleX = transform.localScale.x;
     }
 
