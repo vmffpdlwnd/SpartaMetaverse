@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
                 boxCollider.size = new Vector2(0.5f, 0.6f);
 
                 // 컨트롤러 추가
-                MainGame.PlayerController controller = unitObj.AddComponent<MainGame.PlayerController>();
+                Main.PlayerController controller = unitObj.AddComponent<Main.PlayerController>();
                 if(spumPrefab != null)
                 {
                     controller.spumPrefab = spumPrefab;

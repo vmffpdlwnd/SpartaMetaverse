@@ -1,5 +1,5 @@
 // MainGame/PlayerController.cs
-namespace MainGame
+namespace Main
 {
     using System.Collections;
     using UnityEngine;
