@@ -14,7 +14,7 @@ public class SPUM_Editor : Editor
         
         SPUM_Manager SPB = (SPUM_Manager)target;
 
-        bool dirUnitChk = Directory.Exists("Assets/Resources/SPUM/SPUM_Units");
+        bool dirUnitChk = Directory.Exists("Assets/Resources/Player");
         if(dirUnitChk)
         {
             DirectoryInfo dirInfo = new DirectoryInfo(SPB.unitPath);

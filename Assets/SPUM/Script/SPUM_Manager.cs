@@ -8,13 +8,14 @@ using UnityEditor;
 #endif
 using System.IO;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class SPUM_Manager : MonoBehaviour
 {
     #if UNITY_EDITOR
     public Texture2D _mainBody;
     public int _maxNumber = 100;
-    public string unitPath = "Assets/Resources/SPUM/SPUM_Units/";
+    public string unitPath = "Assets/Resources/Player/";
     public SPUM_Prefabs _unitObjSet;
     public List<SPUM_TexutreList> _textureList = new List<SPUM_TexutreList>();
     public SPUM_SpriteList _spriteObj;
@@ -1303,8 +1304,10 @@ public class SPUM_Manager : MonoBehaviour
     
     public void InstallSpriteData()
     {
+#pragma warning disable CS0219 // 변수가 할당되었지만 해당 값이 사용되지 않았습니다.
         bool Chk = false;
-        if(Directory.Exists("Assets/Resources/SPUM/SPUM_Sprites/Items"))
+#pragma warning restore CS0219 // 변수가 할당되었지만 해당 값이 사용되지 않았습니다.
+        if (Directory.Exists("Assets/Resources/SPUM/SPUM_Sprites/Items"))
         {
             Debug.Log("Found Resources Folder Success!!");
             if(Directory.Exists("Assets/Resources/SPUM/SPUM_Sprites/Items"))
@@ -1402,4 +1405,8 @@ public class SPUM_Manager : MonoBehaviour
         _unitObjSet._spriteOBj._bodyList[5].sprite = tSP[4];
     }
     #endif
+    public void ReturnToMain()
+    {
+        SceneManager.LoadScene("MainScene");
+    }
 }
