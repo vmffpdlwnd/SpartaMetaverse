@@ -8,9 +8,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get { return instance; } }
 
     private GameObject currentPlayerPrefab; 
-    private float currentScore = 0f;
-    private float bestScore = 0f;
-    public bool isGameOver = false;
 
     void Awake()
     {
@@ -25,6 +22,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void Start()
+    {
+        float miniGame1BestScore = PlayerPrefs.GetFloat("MiniGame1BestScore",0);
     }
 
     void LoadPlayerPrefab()
@@ -183,31 +185,5 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void GameOver()
-    {
-        isGameOver = true;
-        if (currentScore > bestScore)
-        {
-            bestScore = currentScore;
-        }
-    }
-
-    public void RestartGame()
-    {
-        isGameOver = false;
-        currentScore = 0;
-        SceneManager.LoadScene("MiniGame1");
-    }
-
-    public void ReturnToMain()
-    {
-        SceneManager.LoadScene("MainScene");
-    }
-
-    void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }
