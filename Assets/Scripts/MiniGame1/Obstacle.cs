@@ -1,0 +1,49 @@
+using MiniGame1;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+public class Obstacle : MonoBehaviour
+{
+    public float highPosY = 1f;
+    public float lowPosY = -1f;
+
+    public float holeSizeMin = 1f;
+    public float holeSizeMax = 3f;
+
+    public Transform topObject;
+    public Transform bottomObject;
+
+    public float widthPadding = 4f;
+
+    MiniGame1.GameManager gameManager;
+
+    public void Start()
+    {
+        gameManager = MiniGame1.GameManager.Instance;
+    }
+    
+    public Vector3 SetRandomPlace(Vector3 lastPosition, int obstacleCount)
+    {
+        float holeSize = Random.Range(holeSizeMin, holeSizeMax);
+        float halfHoleSize = holeSize / 2f;
+        topObject.localPosition = new Vector3(0, halfHoleSize);
+        bottomObject.localPosition = new Vector3(0, -halfHoleSize);
+
+        Vector3 placePosition = lastPosition + new Vector3(widthPadding, 0);
+        placePosition.y = Random.Range(lowPosY, highPosY);
+        
+        transform.position = placePosition;
+        
+        return placePosition;
+    }
+    
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other == null) return;
+
+        MiniGame1.PlayerController player = other.GetComponent<MiniGame1.PlayerController>();
+        if(player != null)
+            gameManager.AddScore(1);
+    }
+
+}
