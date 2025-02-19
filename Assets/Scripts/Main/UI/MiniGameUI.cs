@@ -47,6 +47,16 @@ public class MiniGameUI : MonoBehaviour
         {
             GameInfo currentGame = games.FirstOrDefault(g => g.sceneName == gameName);
 
+            // currentGame이 null인 경우 처리
+            if (currentGame == null)
+            {
+                gameNameText.text = "게임 정보를 찾을 수 없습니다.";
+                gameRuleText.text = " ";
+                gameControlText.text = " ";
+                bestScoreText.text = " ";
+                return;
+            }
+
             gameNameText.text = currentGame.gameName;
             gameRuleText.text = currentGame.gameRule;
             gameControlText.text = currentGame.gameControl;
