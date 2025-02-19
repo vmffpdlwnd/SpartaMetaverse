@@ -26,7 +26,6 @@ public class MiniGameUI : MonoBehaviour
         {
             new GameInfo
             {
-                
                 sceneName = "MiniGame1",
                 gameName = "플러피 플레이어",
                 gameRule = "장애물을 피해 최대한 멀리 날아가세요!",
