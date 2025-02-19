@@ -26,6 +26,19 @@ namespace Main
 
         void Update()
         {
+            // x키는 먼저 체크하도록 변경
+            if(Input.GetKeyDown(KeyCode.X))
+            {
+                StartCoroutine(ToggleDie());
+            }
+
+            // Die 상태에서는 이동과 공격만 제한
+            if(animator.GetBool("Die")) 
+            {
+                rb.velocity = Vector2.zero;
+                return;
+            }
+
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
             
@@ -41,11 +54,6 @@ namespace Main
             {
                 StartCoroutine(Attack());
             }
-            if(Input.GetKeyDown(KeyCode.X))
-            {
-                StartCoroutine(ToggleDie());
-            }
-            if(isDead) return;
 
             if(!isAttacking)
             {
