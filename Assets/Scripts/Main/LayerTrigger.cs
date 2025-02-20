@@ -13,13 +13,19 @@ namespace Cainos.PixelArtTopDown_Basic
         {
             other.gameObject.layer = LayerMask.NameToLayer(layer);
 
-            other.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = sortingLayer;
+            // Check and update SpriteRenderers
             SpriteRenderer[] srs = other.gameObject.GetComponentsInChildren<SpriteRenderer>();
-            foreach ( SpriteRenderer sr in srs)
+            foreach (SpriteRenderer sr in srs)
             {
                 sr.sortingLayerName = sortingLayer;
             }
-        }
 
+            // Check and update SortingGroups
+            UnityEngine.Rendering.SortingGroup[] sortingGroups = other.gameObject.GetComponentsInChildren<UnityEngine.Rendering.SortingGroup>();
+            foreach (UnityEngine.Rendering.SortingGroup sg in sortingGroups)
+            {
+                sg.sortingLayerName = sortingLayer;
+            }
+        }
     }
 }
