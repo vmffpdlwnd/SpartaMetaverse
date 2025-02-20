@@ -65,5 +65,4 @@
 2. 메인 씬 첫 접속 시 미니게임 정보 NULL 출력
 
 ## 캐릭터 생성 라이센스
-[SPUM - soonsoon2](https://github.com/soonsoon2/SPUM)
->>>>>>> Stashed changes
+[SPUM - Soonsoon Pixel Unit Maker](https://github.com/soonsoon2/SPUM)
