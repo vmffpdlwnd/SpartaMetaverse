@@ -25,8 +25,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        float miniGame1BestScore = PlayerPrefs.GetFloat("MiniGame1BestScore",0);
-
         // 초기 캐릭터 로드 로직 추가
         Object[] characterFiles = Resources.LoadAll("SPUM/SPUM_Units", typeof(GameObject));
         
