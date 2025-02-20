@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            LoadPlayerPrefab();
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
@@ -27,25 +26,40 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         float miniGame1BestScore = PlayerPrefs.GetFloat("MiniGame1BestScore",0);
-    }
 
-    public void LoadPlayerPrefab()
-    {
-        // 폴더의 모든 캐릭터 파일 검색
+        // 초기 캐릭터 로드 로직 추가
         Object[] characterFiles = Resources.LoadAll("SPUM/SPUM_Units", typeof(GameObject));
         
-        // 캐릭터가 있으면 첫번째 캐릭터 로드
-        if(characterFiles != null && characterFiles.Length > 0)
+        if (characterFiles == null || characterFiles.Length == 0)
         {
-            currentPlayerPrefab = characterFiles[0] as GameObject;
-            Debug.Log("Player prefab loaded: " + currentPlayerPrefab.name);
+            // 캐릭터 파일이 없으면 커스터마이징 씬으로 이동
+            SceneManager.LoadScene("Customization");
         }
         else
         {
-            currentPlayerPrefab = null;
-            Debug.Log("No player prefabs found."); // Error 대신 Log로 변경
+            // 기본적으로 0번 캐릭터 로드
+            LoadPlayerPrefab(0);
         }
     }
+    public int currentPlayerNumber = 0; // 현재 선택된 플레이어 번호
+
+    public void LoadPlayerPrefab(int playerNumber)
+    {
+        currentPlayerNumber = playerNumber;
+        string playerPath = $"SPUM/SPUM_Units/Player{playerNumber}";
+        currentPlayerPrefab = Resources.Load<GameObject>(playerPath);
+        
+        if(currentPlayerPrefab != null)
+        {
+            Debug.Log($"Player{playerNumber} loaded successfully");
+            Scene currentScene = SceneManager.GetActiveScene();
+            if(currentScene.name == "MainScene" || currentScene.name == "MiniGame1")
+            {
+                SceneManager.LoadScene(currentScene.name);
+            }
+        }
+    }
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "MainScene")  
@@ -102,7 +116,7 @@ public class GameManager : MonoBehaviour
                     boxCollider = unitObj.AddComponent<BoxCollider2D>();
                 }
                 boxCollider.offset = new Vector2(0f, 0.3f);
-                boxCollider.size = new Vector2(0.5f, 0.6f);
+                boxCollider.size = new Vector2(0.3f, 0.5f);
 
                 // 컨트롤러 추가
                 Main.PlayerController controller = unitObj.AddComponent<Main.PlayerController>();
@@ -172,7 +186,7 @@ public class GameManager : MonoBehaviour
                     boxCollider = unitObj.AddComponent<BoxCollider2D>();
                 }
                 boxCollider.offset = new Vector2(0f, 0.3f);
-                boxCollider.size = new Vector2(0.5f, 0.6f);
+                boxCollider.size = new Vector2(0.3f, 0.5f);
 
                 // 카메라 설정
                 Camera mainCamera = Camera.main;
