@@ -36,7 +36,6 @@ public class TalkUI : MonoBehaviour
         }
     };
 
-    private int currentSetIndex = -1;
     private int dialogIndex = 0;
     private string[] currentDialogLines = null;
     private float originalCameraSize; // 원래 카메라 크기 저장용
