@@ -59,12 +59,6 @@ namespace Main
             }
             characterNumbers.Sort();  // 번호 순서대로 정렬
             maxCharacterCount = characterNumbers.Count;
-            
-            Debug.Log($"Found {maxCharacterCount} character files");
-            foreach(int num in characterNumbers)
-            {
-                Debug.Log($"Character number found: {num}");
-            }
         }
 
         private void NextCharacter()
@@ -75,7 +69,6 @@ namespace Main
                 currentIndex = (currentIndex + 1) % maxCharacterCount;
                 currentNumber = characterNumbers[currentIndex];
                 
-                Debug.Log($"Changed to character number: {currentNumber}");
                 UpdateSelectButtonNumber();
                 SelectCharacter();
             }

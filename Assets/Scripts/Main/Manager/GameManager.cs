@@ -51,7 +51,6 @@ public class GameManager : MonoBehaviour
         
         if(currentPlayerPrefab != null)
         {
-            Debug.Log($"Player{playerNumber} loaded successfully");
             Scene currentScene = SceneManager.GetActiveScene();
             if(currentScene.name == "MainScene" || currentScene.name == "MiniGame1")
             {
@@ -129,7 +128,6 @@ public class GameManager : MonoBehaviour
                 if(carPrefab != null)
                 {
                     controller.vehiclePrefab = carPrefab.GetComponent<Main.VehicleController>();
-                    Debug.Log("Car prefab loaded successfully");
                 }
                 else
                 {
