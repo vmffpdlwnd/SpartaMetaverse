@@ -29,6 +29,7 @@ namespace MiniGame1
         
         private int currentScore = 0;
         private int bestScore = 0;
+        private float bestSurvivalTime = 0f;
         MiniGame1.UIManager uiManager;
         public MiniGame1.UIManager UIManager
         {
@@ -48,6 +49,7 @@ namespace MiniGame1
             uiManager = FindObjectOfType<UIManager>();
             DontDestroyOnLoad(gameObject);
             bestScore = PlayerPrefs.GetInt("MiniGame1BestScore", 0);
+            bestSurvivalTime = PlayerPrefs.GetFloat("MiniGame1BestTime", 0f);
         }
         void Start()
         {
@@ -55,13 +57,21 @@ namespace MiniGame1
         }
         public void GameOver()
         {
+            float survivalTime = uiManager.GetSurvivalTime();
+
             if (currentScore > bestScore)
             {
                 bestScore = currentScore;
                 PlayerPrefs.SetInt("MiniGame1BestScore", bestScore);
                 PlayerPrefs.Save(); // 변경사항 즉시 저장
             }
+            if (survivalTime > bestSurvivalTime)
+            {
+                bestSurvivalTime = survivalTime;
+                PlayerPrefs.SetFloat("MiniGame1BestTime", bestSurvivalTime);
+            }
 
+            PlayerPrefs.Save();
             uiManager.SetRestart();
         }
         

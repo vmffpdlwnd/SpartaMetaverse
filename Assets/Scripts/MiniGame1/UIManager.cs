@@ -6,7 +6,11 @@ namespace MiniGame1
     public class UIManager : MonoBehaviour
     {
         public TextMeshProUGUI scoreText;
+        public TextMeshProUGUI survivalTimeText;
         public TextMeshProUGUI gameoverText;
+
+        private float survivalTime = 0f;
+        private bool isGameOver = false;
 
         public void Start()
         {
@@ -21,17 +25,51 @@ namespace MiniGame1
                 return;
             }
             
-            gameoverText.gameObject.SetActive(false);
+            if(gameoverText != null)
+            {
+                gameoverText.gameObject.SetActive(false);
+            }
+
+            UpdateSurvivalTime(); // 초기화
+        }
+        void Update()
+        {
+            if(!isGameOver)
+            {
+                survivalTime += Time.deltaTime;
+                UpdateSurvivalTime();
+            }
+        }
+         private void UpdateSurvivalTime()
+        {
+            if(survivalTimeText != null)
+            {
+                int minutes = Mathf.FloorToInt(survivalTime / 60);
+                int seconds = Mathf.FloorToInt(survivalTime % 60);
+                survivalTimeText.text = $"{minutes:00}:{seconds:00}";
+            }
+        }
+
+        public float GetSurvivalTime()
+        {
+            return survivalTime;
         }
 
         public void SetRestart()
         {
-            gameoverText.gameObject.SetActive(true);
+            isGameOver = true;
+            if(gameoverText != null)
+            {
+                gameoverText.gameObject.SetActive(true);
+            }
         }
 
         public void UpdateScore(int score)
         {
-            scoreText.text = score.ToString();
+            if(scoreText != null)
+            {
+                scoreText.text = score.ToString();
+            }
         }
     }
 }
