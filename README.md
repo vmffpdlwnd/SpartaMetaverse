@@ -63,6 +63,9 @@
 1. 첫 실행 시 캐릭터 없이 메인 씬 진입 시 오류 발생
     - 해결 방안 : 좌측 하단 <캐릭터> 버튼을 누르고 <캐릭터 생성> 버튼 클릭
 2. 메인 씬 첫 접속 시 미니게임 정보 NULL 출력
+    - 해결 방안 : 미니게임 오브젝트 접근을 천천히 하거나 나왔다가 다시 들어가면 해결됨
 
-## 캐릭터 생성 라이센스
-[SPUM - Soonsoon Pixel Unit Maker](https://github.com/soonsoon2/SPUM)
+## 사용한 에셋 링크
+ - 캐릭터 생성 라이센스: [SPUM - Soonsoon Pixel Unit Maker](https://github.com/soonsoon2/SPUM)
+ - 타일맵 에셋: [cinoos - Pixel Art Top Down - Basic ](https://cainos.itch.io/pixel-art-top-down-basic)
+ - 탑승물 에셋: [minzinn - Pixel Vehicles](https://minzinn.itch.io/pixelvehicles)
