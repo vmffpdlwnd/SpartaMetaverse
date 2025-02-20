@@ -69,8 +69,22 @@ public class MiniGameUI : MonoBehaviour
             gameControlText.text = currentGame.gameControl;
             
             // PlayerPrefs에서 직접 최고 점수 읽기
-            int bestScore = PlayerPrefs.GetInt("MiniGame1BestScore", 0);
-            bestScoreText.text = $"{bestScore}";
+            if(currentGame.sceneName == "MiniGame1")
+            {
+                int bestScore = PlayerPrefs.GetInt("MiniGame1BestScore", 0);
+                float bestTime = PlayerPrefs.GetFloat("MiniGame1BestTime", 0f);
+                int minutes = Mathf.FloorToInt(bestTime / 60);
+                int seconds = Mathf.FloorToInt(bestTime % 60);
+                bestScoreText.text = $"최고점수: {bestScore}\n최고생존시간: {minutes:00}:{seconds:00}";
+            }
+            else if(currentGame.sceneName == "MiniGame2")
+            {
+                int bestScore = PlayerPrefs.GetInt("MiniGame2BestScore", 0); 
+                float bestTime = PlayerPrefs.GetFloat("MiniGame2BestTime", 0f);
+                int minutes = Mathf.FloorToInt(bestTime / 60);
+                int seconds = Mathf.FloorToInt(bestTime % 60);
+                bestScoreText.text = $"최고처치: {bestScore}\n최고생존시간: {minutes:00}:{seconds:00}";
+            }
         }
     }
 }

@@ -5,15 +5,14 @@ namespace MiniGame2
 
     public class UIManager : MonoBehaviour
     {
-        [Header("Score UI")]
         [SerializeField] private TextMeshProUGUI killCountText;
         [SerializeField] private TextMeshProUGUI survivalTimeText;
 
-        [Header("Game Over UI")]
         [SerializeField] private GameObject gameOverPanel;
         [SerializeField] private TextMeshProUGUI finalScoreText;  // 최종 점수 표시
 
         private float survivalTime = 0f;
+        private int killCount = 0;
         private bool isGameOver = false;
 
         void Start()
@@ -35,8 +34,9 @@ namespace MiniGame2
             }
         }
 
-        public void UpdateScore(int killCount)
+        public void UpdateScore(int newKillCount)
         {
+            this.killCount = newKillCount;  // 이 부분이 누락되어 있었습니다
             killCountText.text = $"처치: {killCount}";
         }
 
@@ -47,11 +47,16 @@ namespace MiniGame2
             survivalTimeText.text = $"생존: {minutes:00}:{seconds:00}";
         }
 
+        public float GetSurvivalTime()
+        {
+            return survivalTime;
+        }
+
         public void SetGameOver()
         {
             isGameOver = true;
             gameOverPanel.SetActive(true);
-            finalScoreText.text = $"최종 점수: {MiniGame2.GameManager.Instance.GetCurrentScore()}";
+            finalScoreText.text = $"처치: {killCount}\n생존시간: {Mathf.FloorToInt(survivalTime / 60):00}:{Mathf.FloorToInt(survivalTime % 60):00}";
         }
     }
 }
