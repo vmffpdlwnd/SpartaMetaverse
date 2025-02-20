@@ -124,6 +124,17 @@ public class GameManager : MonoBehaviour
                 {
                     controller.spumPrefab = spumPrefab;
                 }
+                // 차량 프리팹 로드 및 설정
+                GameObject carPrefab = Resources.Load<GameObject>("Prefabs/Car");
+                if(carPrefab != null)
+                {
+                    controller.vehiclePrefab = carPrefab.GetComponent<Main.VehicleController>();
+                    Debug.Log("Car prefab loaded successfully");
+                }
+                else
+                {
+                    Debug.LogError("Failed to load car prefab from Resources/Prefabs/Main/Car");
+                }
 
                 // 카메라 설정
                 Camera mainCamera = Camera.main;

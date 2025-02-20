@@ -1,4 +1,3 @@
-// MainGame/PlayerController.cs
 namespace Main
 {
     using System.Collections;
@@ -8,11 +7,14 @@ namespace Main
     {
         public SPUM_Prefabs spumPrefab;
         private Rigidbody2D rb;
-        private Animator animator;
+        public Animator animator;
         public float moveSpeed = 2.5f;
         private bool isAttacking = false;
         private bool isDead = false;
         private float baseScaleX = 2f;
+
+        [SerializeField] public VehicleController vehiclePrefab; // 차량 프리팹
+        private VehicleController currentVehicle;
 
         void Start()
         {
@@ -26,6 +28,31 @@ namespace Main
 
         void Update()
         {
+            // 차량 상태일 때 E키로 나가기
+            if (currentVehicle != null)
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    // SPUM 캐릭터 다시 활성화
+                    if(spumPrefab != null)
+                    {
+                        spumPrefab.gameObject.SetActive(true);
+                    }
+                    
+                    // 카메라 타겟을 다시 플레이어로 변경
+                    CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
+                    if (cameraFollow != null)
+                    {
+                        cameraFollow.target = this.transform;
+                    }
+                    
+                    // 차량 제거
+                    Destroy(currentVehicle.gameObject);
+                    currentVehicle = null;
+                    return;
+                }
+            }
+
             // x키는 먼저 체크하도록 변경
             if(Input.GetKeyDown(KeyCode.X))
             {
@@ -62,6 +89,33 @@ namespace Main
                 else
                     spumPrefab.PlayAnimation(0);
             }
+
+            // 차량 교체 시스템
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                if(vehiclePrefab != null)
+                {
+                    // SPUM 캐릭터 숨기기
+                    if(spumPrefab != null)
+                    {
+                        spumPrefab.gameObject.SetActive(false);
+                    }
+                    
+                    // 차량 생성
+                    currentVehicle = Instantiate(vehiclePrefab, transform.position, Quaternion.identity);
+                    
+                    // 플레이어 컨트롤러 설정
+                    currentVehicle.GetComponent<VehicleController>().SetPlayerController(this);
+                    
+                    // 카메라 타겟 변경
+                    CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
+                    if (cameraFollow != null)
+                    {
+                        cameraFollow.target = currentVehicle.transform;
+                    }
+                }
+            }
+
         }
 
         IEnumerator Attack()
@@ -86,6 +140,26 @@ namespace Main
                 spumPrefab.PlayAnimation(0);
             }
             yield return null;
+        }
+
+        public void ExitVehicle()
+        {
+            // SPUM 캐릭터 다시 활성화
+            if(spumPrefab != null)
+            {
+                spumPrefab.gameObject.SetActive(true);
+            }
+            
+            // 카메라 타겟을 다시 플레이어로 변경
+            CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
+            if (cameraFollow != null)
+            {
+                cameraFollow.target = this.transform;
+            }
+            
+            // 차량 제거
+            Destroy(currentVehicle.gameObject);
+            currentVehicle = null;
         }
     }
 }
