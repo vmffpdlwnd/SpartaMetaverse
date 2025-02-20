@@ -69,6 +69,10 @@ public class GameManager : MonoBehaviour
         {
             SpawnMiniGamePlayer();
         }
+        else if(scene.name == "MiniGame2")
+        {
+            SpawnMiniGame2Player();
+        }
     }
 
     void SpawnMainPlayer()
@@ -217,4 +221,61 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    void SpawnMiniGame2Player()
+{
+    if(currentPlayerPrefab != null)
+    {
+        // 캐릭터 생성 (중앙에 위치)
+        Vector3 spawnPosition = new Vector3(0, 0, 0);
+        GameObject player = Instantiate(currentPlayerPrefab, spawnPosition, Quaternion.identity);
+        player.transform.localScale = new Vector3(2f, 2f, 2f);
+
+        Transform unitRoot = player.transform.GetChild(0);
+        if(unitRoot != null)
+        {
+            GameObject unitObj = unitRoot.gameObject;
+            SPUM_Prefabs spumPrefab = player.GetComponent<SPUM_Prefabs>();
+
+            // 태그와 레이어 설정
+            unitObj.tag = "Player";
+            unitObj.layer = LayerMask.NameToLayer("Default");
+
+            // SortingGroup 설정
+            SortingGroup sortingGroup = unitObj.GetComponent<SortingGroup>();
+            if(sortingGroup == null)
+            {
+                sortingGroup = unitObj.AddComponent<SortingGroup>();
+            }
+            sortingGroup.sortingLayerName = "Default";
+            sortingGroup.sortingOrder = 100;
+
+            // Rigidbody2D 설정
+            Rigidbody2D rb = unitObj.GetComponent<Rigidbody2D>();
+            if(rb == null)
+            {
+                rb = unitObj.AddComponent<Rigidbody2D>();
+            }
+            rb.gravityScale = 0f;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+            // BoxCollider2D 설정
+            BoxCollider2D boxCollider = unitObj.GetComponent<BoxCollider2D>();
+            if(boxCollider == null)
+            {
+                boxCollider = unitObj.AddComponent<BoxCollider2D>();
+            }
+            boxCollider.offset = new Vector2(0f, 0.3f);
+            boxCollider.size = new Vector2(0.3f, 0.5f);
+            boxCollider.isTrigger = true;
+
+            // 컨트롤러 추가
+            MiniGame2.PlayerController controller = unitObj.AddComponent<MiniGame2.PlayerController>();
+            if(spumPrefab != null)
+            {
+                controller.spumPrefab = spumPrefab;
+            }
+        }
+    }
+}
 }
