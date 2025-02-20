@@ -30,6 +30,13 @@ public class MiniGameUI : MonoBehaviour
                 gameName = "플러피 플레이어",
                 gameRule = "장애물을 피해 최대한 멀리 날아가세요!",
                 gameControl = "마우스 좌클릭 또는 스페이스바로 점프",
+            },
+            new GameInfo
+            {
+                sceneName = "MiniGame2",
+                gameName = "플레이어를 지켜라",
+                gameRule = "주변에서 다가오는 적들을 클릭해서 제거하고 생존하세요!\n적이 플레이어에게 닿으면 게임 오버!",
+                gameControl = "마우스로 적을 클릭하여 제거",
             }
         };
     }
